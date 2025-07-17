@@ -27,7 +27,7 @@ Convert complex WSDL files into structured Excel documentation – directly in y
 
 ## 📸 Screenshots
 
-You can find examples in the [`screenshot/`](screenshot/) folder. Here's a sample:
+You can find examples in the [`screenshots/`](screenshots/) folder. Here's a sample:
 
 <p align="center">
   <img src="screenshots/preview-screen.png" width="600" alt="WSDL Preview Screenshot">
