@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WSDL to Excel Documentation Generator</title>
+    <meta name="description" content="Convert WSDL files to Excel documentation with detailed service information, operations, and data types.">
+    <meta name="keywords" content="WSDL, Excel, Documentation, SOAP, Web Services, XML, Converter">
+    <meta name="author" content="WSDL to Excel Converter">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://m3hr4nn.github.io/wsdl-to-xlsx-converter/">
+    <meta property="og:title" content="WSDL to Excel Documentation Generator">
+    <meta property="og:description" content="Convert WSDL files to Excel documentation with detailed service information, operations, and data types.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://m3hr4nn.github.io/wsdl-to-xlsx-converter/">
+    <meta property="twitter:title" content="WSDL to Excel Documentation Generator">
+    <meta property="twitter:description" content="Convert WSDL files to Excel documentation with detailed service information, operations, and data types.">
+    
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WSDL to Excel Documentation Generator</h1>
+            <p class="subtitle">Convert your WSDL files into comprehensive Excel documentation</p>
+        </header>
+        
+        <main>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">Drop your WSDL file here or click to browse</div>
+                <div class="upload-subtext">Supports .wsdl and .xml files</div>
+                <input type="file" id="fileInput" accept=".wsdl,.xml" />
+            </div>
+
+            <div class="file-info" id="fileInfo">
+                <div class="file-name" id="fileName"></div>
+                <div class="file-size" id="fileSize"></div>
+            </div>
+
+            <button class="process-btn" id="processBtn" disabled>Generate Excel Documentation</button>
+
+            <div class="status" id="status"></div>
+
+            <div class="preview-section" id="previewSection">
+                <h3 class="preview-title">Documentation Preview</h3>
+                <div class="preview-content" id="previewContent"></div>
+                <button class="download-btn" id="downloadBtn">Download Excel File</button>
+            </div>
+        </main>
+
+        <footer>
+            <div class="features">
+                <h3>Features</h3>
+                <ul>
+                    <li>✅ Parse WSDL files and extract service information</li>
+                    <li>✅ Generate comprehensive Excel documentation</li>
+                    <li>✅ Multiple sheets: Overview, Services, Operations, Messages, Types, Bindings</li>
+                    <li>✅ Drag & drop file upload</li>
+                    <li>✅ Real-time preview</li>
+                    <li>✅ Client-side processing (no server required)</li>
+                </ul>
+            </div>
+            
+            <div class="github-link">
+                <a href="https://github.com/m3hr4nn/wsdl-to-xlsx-converter" target="_blank" rel="noopener noreferrer">
+                    View on GitHub
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
