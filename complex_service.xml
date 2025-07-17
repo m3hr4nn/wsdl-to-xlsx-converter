@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://example.com/services"
+                  targetNamespace="http://example.com/services"
+                  name="ComplexService">
+
+    <!-- Types Definition -->
+    <wsdl:types>
+        <xs:schema targetNamespace="http://example.com/services"
+                   elementFormDefault="qualified">
+            <!-- Complex Type: Customer -->
+            <xs:complexType name="Customer">
+                <xs:sequence>
+                    <xs:element name="customerId" type="xs:string"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="email" type="xs:string"/>
+                    <xs:element name="address" type="tns:Address"/>
+                    <xs:element name="orders" type="tns:Order" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <!-- Complex Type: Address -->
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element name="street" type="xs:string"/>
+                    <xs:element name="city" type="xs:string"/>
+                    <xs:element name="country" type="xs:string"/>
+                    <xs:element name="postalCode" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <!-- Complex Type: Order -->
+            <xs:complexType name="Order">
+                <xs:sequence>
+                    <xs:element name="orderId" type="xs:string"/>
+                    <xs:element name="date" type="xs:dateTime"/>
+                    <xs:element name="items" type="tns:OrderItem" minOccurs="1" maxOccurs="unbounded"/>
+                    <xs:element name="totalAmount" type="xs:decimal"/>
+                    <xs:element name="status" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <!-- Complex Type: OrderItem -->
+            <xs:complexType name="OrderItem">
+                <xs:sequence>
+                    <xs:element name="itemId" type="xs:string"/>
+                    <xs:element name="productName" type="xs:string"/>
+                    <xs:element name="quantity" type="xs:int"/>
+                    <xs:element name="price" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <!-- Complex Type: Payment -->
+            <xs:complexType name="Payment">
+                <xs:sequence>
+                    <xs:element name="paymentId" type="xs:string"/>
+                    <xs:element name="orderId" type="xs:string"/>
+                    <xs:element name="amount" type="xs:decimal"/>
+                    <xs:element name="paymentMethod" type="xs:string"/>
+                    <xs:element name="transactionDate" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <!-- Complex Type: InventoryItem -->
+            <xs:complexType name="InventoryItem">
+                <xs:sequence>
+                    <xs:element name="itemId" type="xs:string"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="stockQuantity" type="xs:int"/>
+                    <xs:element name="price" type="xs:decimal"/>
+                    <xs:element name="category" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <!-- Request and Response Elements -->
+            <xs:element name="GetCustomerRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="customerId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetCustomerResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="customer" type="tns:Customer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="CreateOrderRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="customerId" type="xs:string"/>
+                        <xs:element name="items" type="tns:OrderItem" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CreateOrderResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="order" type="tns:Order"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="ProcessPaymentRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="orderId" type="xs:string"/>
+                        <xs:element name="amount" type="xs:decimal"/>
+                        <xs:element name="paymentMethod" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ProcessPaymentResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="payment" type="tns:Payment"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="UpdateInventoryRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="itemId" type="xs:string"/>
+                        <xs:element name="stockQuantity" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="UpdateInventoryResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="inventoryItem" type="tns:InventoryItem"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="GetInventoryListRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="category" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetInventoryListResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="inventoryItems" type="tns:InventoryItem" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="Fault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="errorCode" type="xs:string"/>
+                        <xs:element name="errorMessage" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+
+    <!-- Messages -->
+    <wsdl:message name="GetCustomerRequestMsg">
+        <wsdl:part name="parameters" element="tns:GetCustomerRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetCustomerResponseMsg">
+        <wsdl:part name="parameters" element="tns:GetCustomerResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="CreateOrderRequestMsg">
+        <wsdl:part name="parameters" element="tns:CreateOrderRequest"/>
+    </wsdl:message>
+    <wsdl:message name="CreateOrderResponseMsg">
+        <wsdl:part name="parameters" element="tns:CreateOrderResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="ProcessPaymentRequestMsg">
+        <wsdl:part name="parameters" element="tns:ProcessPaymentRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ProcessPaymentResponseMsg">
+        <wsdl:part name="parameters" element="tns:ProcessPaymentResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="UpdateInventoryRequestMsg">
+        <wsdl:part name="parameters" element="tns:UpdateInventoryRequest"/>
+    </wsdl:message>
+    <wsdl:message name="UpdateInventoryResponseMsg">
+        <wsdl:part name="parameters" element="tns:UpdateInventoryResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="GetInventoryListRequestMsg">
+        <wsdl:part name="parameters" element="tns:GetInventoryListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetInventoryListResponseMsg">
+        <wsdl:part name="parameters" element="tns:GetInventoryListResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="FaultMsg">
+        <wsdl:part name="fault" element="tns:Fault"/>
+    </wsdl:message>
+
+    <!-- Port Types -->
+    <wsdl:portType name="CustomerServicePortType">
+        <wsdl:operation name="GetCustomer">
+            <wsdl:input message="tns:GetCustomerRequestMsg"/>
+            <wsdl:output message="tns:GetCustomerResponseMsg"/>
+            <wsdl:fault name="ServiceFault" message="tns:FaultMsg"/>
+        </wsdl:operation>
+        <wsdl:operation name="CreateOrder">
+            <wsdl:input message="tns:CreateOrderRequestMsg"/>
+            <wsdl:output message="tns:CreateOrderResponseMsg"/>
+            <wsdl:fault name="ServiceFault" message="tns:FaultMsg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:portType name="PaymentServicePortType">
+        <wsdl:operation name="ProcessPayment">
+            <wsdl:input message="tns:ProcessPaymentRequestMsg"/>
+            <wsdl:output message="tns:ProcessPaymentResponseMsg"/>
+            <wsdl:fault name="ServiceFault" message="tns:FaultMsg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:portType name="InventoryServicePortType">
+        <wsdl:operation name="UpdateInventory">
+            <wsdl:input message="tns:UpdateInventoryRequestMsg"/>
+            <wsdl:output message="tns:UpdateInventoryResponseMsg"/>
+            <wsdl:fault name="ServiceFault" message="tns:FaultMsg"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetInventoryList">
+            <wsdl:input message="tns:GetInventoryListRequestMsg"/>
+            <wsdl:output message="tns:GetInventoryListResponseMsg"/>
+            <wsdl:fault name="ServiceFault" message="tns:FaultMsg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!-- Bindings -->
+    <wsdl:binding name="CustomerServiceSOAPBinding" type="tns:CustomerServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetCustomer">
+            <soap:operation soapAction="http://example.com/services/GetCustomer"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceFault">
+                <soap:fault name="ServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="CreateOrder">
+            <soap:operation soapAction="http://example.com/services/CreateOrder"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceFault">
+                <soap:fault name="ServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:binding name="PaymentServiceSOAPBinding" type="tns:PaymentServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ProcessPayment">
+            <soap:operation soapAction="http://example.com/services/ProcessPayment"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceFault">
+                <soap:fault name="ServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:binding name="InventoryServiceSOAPBinding" type="tns:InventoryServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="UpdateInventory">
+            <soap:operation soapAction="http://example.com/services/UpdateInventory"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceFault">
+                <soap:fault name="ServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetInventoryList">
+            <soap:operation soapAction="http://example.com/services/GetInventoryList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceFault">
+                <soap:fault name="ServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <!-- Services -->
+    <wsdl:service name="CustomerService">
+        <wsdl:port name="CustomerServicePort" binding="tns:CustomerServiceSOAPBinding">
+            <soap:address location="http://example.com/services/CustomerService"/>
+        </wsdl:port>
+    </wsdl:service>
+
+    <wsdl:service name="PaymentService">
+        <wsdl:port name="PaymentServicePort" binding="tns:PaymentServiceSOAPBinding">
+            <soap:address location="http://example.com/services/PaymentService"/>
+        </wsdl:port>
+    </wsdl:service>
+
+    <wsdl:service name="InventoryService">
+        <wsdl:port name="InventoryServicePort" binding="tns:InventoryServiceSOAPBinding">
+            <soap:address location="http://example.com/services/InventoryService"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>
