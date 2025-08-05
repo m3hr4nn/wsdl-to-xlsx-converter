@@ -35,9 +35,10 @@
         <main>
             <div class="upload-area" id="uploadArea">
                 <div class="upload-icon">📄</div>
-                <div class="upload-text">Drop your WSDL file here or click to browse</div>
-                <div class="upload-subtext">Supports .wsdl and .xml files</div>
-                <input type="file" id="fileInput" accept=".wsdl,.xml" />
+                <div class="upload-text">Drag & drop your WSDL file here</div>
+                <div class="upload-subtext">or</div>
+                <button class="btn" onclick="document.getElementById('fileInput').click()">Choose File</button>
+                <input type="file" id="fileInput" class="file-input" accept=".wsdl,.xml" />
             </div>
 
             <div class="file-info" id="fileInfo">
